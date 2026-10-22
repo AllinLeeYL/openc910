@@ -3,7 +3,7 @@
 rtl_dir := $(abspath ../../../../C910_RTL_FACTORY)
 vsrcs := $(shell sed -n 's#^$${CODE_BASE_PATH}\(.*\.v\)$$#$(rtl_dir)\1#p' $(rtl_dir)/gen_rtl/filelists/C910_asic_rtl.fl)
 
-C910CoreBlackbox.preprocessed.v: $(rtl_dir)/gen_rtl/cpu/rtl/cpu_cfig.h sysmap.h $(vsrcs) C910CoreBlackbox.v
+C910CoreBlackbox.preprocessed.v: C910CoreBlackbox.v $(rtl_dir)/gen_rtl/cpu/rtl/cpu_cfig.h sysmap.h $(vsrcs)
 	awk 1 $^ > $@
 
 # The boot ROM image is checked in so Chipyard needs no RISC-V toolchain; rebuild with `make bootrom.img`.

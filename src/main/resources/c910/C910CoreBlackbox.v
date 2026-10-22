@@ -1,7 +1,11 @@
 // Chipyard tile wrapper for the openC910 cluster: one core, one 128-bit AXI4 master.
 // Port names follow Chisel's flattening of rocket-chip's AXI4Bundle (C910Tile.scala).
-// The open-source cluster always has two cores; core 1 is held in reset, as in smart_run.
+// The open-source cluster always has two cores. Core 1 is permanently in reset, so it is replaced
+// by its constant reset-state outputs (see openC910.v), ~1.5x faster simulation; the Makefile
+// puts this file first so the define reaches the RTL.
 // The cluster's own PLIC and CLINT sit at apb_base (0xb0000000), CLINT at +0x4000000.
+`define C910_CORE1_TIED_OFF
+
 module C910CoreBlackbox (
   input          clock,
   input          reset,

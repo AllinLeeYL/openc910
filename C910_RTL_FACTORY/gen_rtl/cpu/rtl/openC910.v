@@ -862,6 +862,72 @@ ct_top  x_ct_top_0 (
 // &ConnRule(s/cp0_/core1_/); @138
 // &ConnRule(s/^x_/core1_/); @139
 // &Instance("ct_top", "x_ct_top_1"); @140
+`ifdef C910_CORE1_TIED_OFF
+// Core 1 held in reset: drive the constant outputs ct_top has in that state instead of
+// simulating it. Values from an iverilog run of ct_top with pad_core_rst_b low and every
+// other input randomized for 2000 cycles; csr_wdata (an unreset, unused flop) reads 0.
+assign ibiu1_pad_acready        = 1'h1;
+assign ibiu1_pad_araddr         = 40'h0000000000;
+assign ibiu1_pad_arbar          = 2'h0;
+assign ibiu1_pad_arburst        = 2'h0;
+assign ibiu1_pad_arcache        = 4'h0;
+assign ibiu1_pad_ardomain       = 2'h0;
+assign ibiu1_pad_arid           = 5'h00;
+assign ibiu1_pad_arlen          = 2'h0;
+assign ibiu1_pad_arlock         = 1'h0;
+assign ibiu1_pad_arprot         = 3'h0;
+assign ibiu1_pad_arsize         = 3'h0;
+assign ibiu1_pad_arsnoop        = 4'h0;
+assign ibiu1_pad_aruser         = 3'h0;
+assign ibiu1_pad_arvalid        = 1'h0;
+assign ibiu1_pad_awaddr         = 40'h0000000000;
+assign ibiu1_pad_awbar          = 2'h0;
+assign ibiu1_pad_awburst        = 2'h0;
+assign ibiu1_pad_awcache        = 4'h0;
+assign ibiu1_pad_awdomain       = 2'h0;
+assign ibiu1_pad_awid           = 5'h00;
+assign ibiu1_pad_awlen          = 2'h0;
+assign ibiu1_pad_awlock         = 1'h0;
+assign ibiu1_pad_awprot         = 3'h0;
+assign ibiu1_pad_awsize         = 3'h0;
+assign ibiu1_pad_awsnoop        = 3'h0;
+assign ibiu1_pad_awunique       = 1'h0;
+assign ibiu1_pad_awuser         = 1'h0;
+assign ibiu1_pad_awvalid        = 1'h0;
+assign ibiu1_pad_back           = 1'h0;
+assign ibiu1_pad_bready         = 1'h1;
+assign ibiu1_pad_cddata         = 128'h00000000000000000000000000000000;
+assign ibiu1_pad_cderr          = 1'h0;
+assign ibiu1_pad_cdlast         = 1'h0;
+assign ibiu1_pad_cdvalid        = 1'h0;
+assign ibiu1_pad_cnt_en         = 4'h0;
+assign ibiu1_pad_crresp         = 5'h00;
+assign ibiu1_pad_crvalid        = 1'h0;
+assign ibiu1_pad_csr_sel        = 1'h0;
+assign ibiu1_pad_csr_wdata      = 80'h00000000000000000000;
+assign ibiu1_pad_jdb_pm         = 1'h0;
+assign ibiu1_pad_lpmd_b         = 1'h1;
+assign ibiu1_pad_rack           = 1'h0;
+assign ibiu1_pad_rready         = 1'h1;
+assign ibiu1_pad_wdata          = 128'h00000000000000000000000000000000;
+assign ibiu1_pad_werr           = 1'h0;
+assign ibiu1_pad_wlast          = 1'h0;
+assign ibiu1_pad_wns            = 1'h0;
+assign ibiu1_pad_wstrb          = 16'h0000;
+assign ibiu1_pad_wvalid         = 1'h0;
+assign core1_pad_mstatus        = 64'h0000000a00001900;
+assign core1_cpu_no_retire      = 1'h0;
+assign core1_pad_retire0        = 1'h0;
+assign core1_pad_retire0_pc     = 40'h0000000000;
+assign core1_pad_retire1        = 1'h0;
+assign core1_pad_retire1_pc     = 40'h0000000000;
+assign core1_pad_retire2        = 1'h0;
+assign core1_pad_retire2_pc     = 40'h0000000000;
+assign core1_dbg_ack_pc         = 1'h0;
+assign core1_enter_dbg_req_o    = 1'h0;
+assign core1_exit_dbg_req_o     = 1'h0;
+assign core1_regs_serial_data   = 64'h0000000008052b43;
+`else
 ct_top  x_ct_top_1 (
   .biu_pad_acready         (ibiu1_pad_acready      ),
   .biu_pad_araddr          (ibiu1_pad_araddr       ),
@@ -973,6 +1039,7 @@ ct_top  x_ct_top_1 (
   .x_had_dbg_mask          (core1_had_dbg_mask     ),
   .x_regs_serial_data      (core1_regs_serial_data )
 );
+`endif
 
 // &Connect(.pad_cpu_rst_b      (cpurst_b)); @141
 // &Connect(.pad_core_rst_b     (core1_rst_b)); @142
